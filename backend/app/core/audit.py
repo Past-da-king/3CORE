@@ -26,7 +26,9 @@ def log_event(
             event_type=event_type,
             category=category,
             description=description,
-            event_metadata=json.dumps(metadata) if metadata else None,
+            # default=str so date/datetime/Decimal in metadata don't blow up
+            # the audit write (which previously silently dropped the entry).
+            event_metadata=json.dumps(metadata, default=str) if metadata else None,
             execution_time_ms=execution_time_ms,
             ip_address=ip_address,
         )

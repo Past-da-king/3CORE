@@ -48,7 +48,15 @@ class Settings(BaseSettings):
     MAX_UPLOAD_BYTES: int = int(os.getenv("MAX_UPLOAD_BYTES", str(25 * 1024 * 1024)))
     ALLOWED_UPLOAD_EXTENSIONS_RAW: str = os.getenv(
         "ALLOWED_UPLOAD_EXTENSIONS",
-        "pdf,doc,docx,xls,xlsx,ppt,pptx,png,jpg,jpeg,gif,txt,csv,zip",
+        # Broad set covering real construction / project-office uploads:
+        # documents, spreadsheets, presentations, images (incl. phone HEIC),
+        # CAD drawings, archives, and email exports. Executables/scripts
+        # remain blocked by omission.
+        "pdf,doc,docx,xls,xlsx,xlsm,ppt,pptx,txt,csv,rtf,odt,ods,odp,"
+        "png,jpg,jpeg,gif,bmp,tif,tiff,webp,heic,heif,svg,"
+        "dwg,dxf,dwf,"
+        "zip,rar,7z,tar,gz,"
+        "msg,eml",
     )
 
     @property

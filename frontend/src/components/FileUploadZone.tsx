@@ -49,9 +49,10 @@ export const FileUploadZone: React.FC<FileUploadZoneProps> = ({
         });
       }
       onSuccess();
-    } catch (err) {
+    } catch (err: any) {
       console.error('Upload failed', err);
-      alert('Upload failed. Please try again.');
+      const detail = err?.response?.data?.detail;
+      alert(detail ? `Upload failed: ${detail}` : 'Upload failed. Please try again.');
     } finally {
       setUploading(false);
     }
